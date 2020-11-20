@@ -123,15 +123,26 @@ static NSMutableDictionary<NSString *, RNVoipPushNotificationCompletion> *comple
 // --- this usually register once and ASAP after your app launch
 + (void)voipRegistration
 {
-    if (_isVoipRegistered) {
-#ifdef DEBUG
-        RCTLog(@"[RNVoipPushNotificationManager] voipRegistration is already registered");
-#endif
-    } else {
-        _isVoipRegistered = YES;
-#ifdef DEBUG
-        RCTLog(@"[RNVoipPushNotificationManager] voipRegistration enter");
-#endif
+//     if (_isVoipRegistered) {
+// #ifdef DEBUG
+//         RCTLog(@"[RNVoipPushNotificationManager] voipRegistration is already registered");
+// #endif
+//     } else {
+//         _isVoipRegistered = YES;
+// #ifdef DEBUG
+//         RCTLog(@"[RNVoipPushNotificationManager] voipRegistration enter");
+// #endif
+//         dispatch_queue_t mainQueue = dispatch_get_main_queue();
+//         dispatch_async(mainQueue, ^{
+//             // --- Create a push registry object
+//             PKPushRegistry * voipRegistry = [[PKPushRegistry alloc] initWithQueue: mainQueue];
+//             // --- Set the registry's delegate to AppDelegate
+//             voipRegistry.delegate = (RNVoipPushNotificationManager *)RCTSharedApplication().delegate;
+//             // ---  Set the push type to VoIP
+//             voipRegistry.desiredPushTypes = [NSSet setWithObject:PKPushTypeVoIP];
+//         });
+//     }
+
         dispatch_queue_t mainQueue = dispatch_get_main_queue();
         dispatch_async(mainQueue, ^{
             // --- Create a push registry object
@@ -141,7 +152,7 @@ static NSMutableDictionary<NSString *, RNVoipPushNotificationCompletion> *comple
             // ---  Set the push type to VoIP
             voipRegistry.desiredPushTypes = [NSSet setWithObject:PKPushTypeVoIP];
         });
-    }
+        RCTLog(@"[RNVoipPushNotificationManager] voipRegistration enter");
 }
 
 // --- should be called from `AppDelegate.didUpdatePushCredentials`
